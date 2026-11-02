@@ -126,7 +126,7 @@ if (!document.querySelector(".color-choice.selected")) selectedColor = "#f05c7b"
 setAvatarProfile(localAvatar, playerName, selectedColor);
 
 function updateCount(count) {
-  playerCount.textContent = `${count} ${count === 1 ? "here" : "here"}`;
+  playerCount.textContent = `${count} ${count === 1 ? "player here" : "players here"}`;
 }
 function addRemote(player) {
   if (!player || player.id === playerId || remoteAvatars.has(player.id)) return;
@@ -195,7 +195,6 @@ function connectMultiplayer() {
         if (avatar) {
           scene.remove(avatar);
           avatar.traverse((obj) => { if (obj.isSprite) { obj.material.map?.dispose(); obj.material.dispose(); } });
-          avatar.traverse((obj) => { if (obj.isMesh) obj.geometry.dispose(); });
         }
         remoteAvatars.delete(data.id);
         addChatLine("", "A player left the room.", true);
