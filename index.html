@@ -4,16 +4,12 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="theme-color" content="#171a27">
-  <meta name="description" content="An independent browser-based 3D social room prototype.">
+  <meta name="description" content="An independent browser-based 3D social world.">
   <title>Rec-browser</title>
   <link rel="stylesheet" href="./styles.css">
   <script src="./config.js"></script>
   <script type="importmap">
-    {
-      "imports": {
-        "three": "https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js"
-      }
-    }
+    {"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js"}}
   </script>
 </head>
 <body>
@@ -27,14 +23,28 @@
     <section id="welcome" class="welcome-panel">
       <p class="eyebrow">INDEPENDENT SOCIAL WORLD</p>
       <h1>Your room.<br><span>Your world.</span></h1>
-      <p class="intro">A new browser-based 3D hangout is just getting started.</p>
+      <p class="intro">Meet up, move around, and chat in a shared browser world.</p>
+      <label class="field-label" for="player-name">Display name</label>
+      <input id="player-name" class="profile-input" maxlength="18" autocomplete="nickname" value="Guest">
+      <label class="field-label" for="player-color">Avatar color</label>
+      <div class="color-row">
+        <button class="color-choice selected" data-color="#f05c7b" style="--swatch:#f05c7b" aria-label="Pink"></button>
+        <button class="color-choice" data-color="#55b8e8" style="--swatch:#55b8e8" aria-label="Blue"></button>
+        <button class="color-choice" data-color="#65d69b" style="--swatch:#65d69b" aria-label="Green"></button>
+        <button class="color-choice" data-color="#a995f2" style="--swatch:#a995f2" aria-label="Purple"></button>
+        <button class="color-choice" data-color="#f2bd59" style="--swatch:#f2bd59" aria-label="Yellow"></button>
+      </div>
       <button id="play-button" class="primary-button">Play</button>
-      <p class="hint">No account needed for this prototype.</p>
+      <p class="hint">Your name and color are saved on this device.</p>
     </section>
 
     <section id="hud" class="hud hidden">
-      <div class="room-label"><span class="live-dot"></span> THE LOBBY <small>PUBLIC ROOM</small></div>
-      <div class="hud-actions"><button id="chat-toggle" class="small-button">Chat</button><button id="leave-button" class="small-button">Leave</button></div>
+      <div class="room-label"><span class="live-dot"></span> THE LOBBY <small>PUBLIC ROOM</small><span id="player-count">1 here</span></div>
+      <div class="hud-actions">
+        <button id="emote-button" class="small-button" title="Wave">👋 Wave</button>
+        <button id="chat-toggle" class="small-button">Chat</button>
+        <button id="leave-button" class="small-button">Leave</button>
+      </div>
     </section>
 
     <section id="chat-panel" class="chat-panel hidden">
@@ -51,7 +61,7 @@
       <div id="look-area" class="look-area">DRAG TO LOOK</div>
     </div>
     <div id="crosshair" class="crosshair hidden"></div>
-    <div id="toast" class="toast hidden"></div>
+    <div id="toast" class="toast hidden" role="status"></div>
   </main>
   <script type="module" src="./game.js"></script>
 </body>
