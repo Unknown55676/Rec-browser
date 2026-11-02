@@ -1,4 +1,5 @@
 const http = require("node:http");
+const { randomUUID } = require("node:crypto");
 const { WebSocketServer, WebSocket } = require("ws");
 
 const PORT = Number(process.env.PORT || 3000);
@@ -29,7 +30,7 @@ wss.on("connection", (socket) => {
     socket.close(1008, "Room full");
     return;
   }
-  const id = cryptoRandomId();
+  const id = randomUUID();
   const player = { id, name: "Guest", x: 0, y: 0, z: 0, rotation: 0 };
   players.set(id, player);
   socket.playerId = id;
@@ -46,7 +47,7 @@ wss.on("connection", (socket) => {
     player.x = Math.max(-100, Math.min(100, x));
     player.y = Math.max(-10, Math.min(30, y));
     player.z = Math.max(-100, Math.min(100, z));
-    player.rotation = rotation;
+    player.rotation = Math.max(-Math.PI * 100, Math.min(Math.PI * 100, rotation));
     broadcast({ type: "player-moved", player }, socket);
   });
 
@@ -56,9 +57,6 @@ wss.on("connection", (socket) => {
   });
 });
 
-function cryptoRandomId() {
-  return Math.random().toString(36).slice(2, 10);
-}
 
 server.listen(PORT, "0.0.0.0", () => {
   console.log(`Rec-browser server listening on port ${PORT}`);
